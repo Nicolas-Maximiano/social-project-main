@@ -63,7 +63,9 @@
         font-size: .85rem;
       }
     }
-
+      a {
+        z-index: 81;
+      }
     button {
       padding: 12px 22px;
       border: 0;
