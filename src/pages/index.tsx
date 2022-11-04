@@ -123,7 +123,9 @@ const Home: NextPage = () => {
           Aulas gratuitas para crianças em vulnerabilidade social e mulheres que
           sofreram violência domestica.
         </p>
-        <button className="flip-for-image" style={{ animationDelay: "1.7s" }}>Saiba mais</button>
+        <a href="#contact">
+          <button className="flip-for-image" style={{ animationDelay: "1.7s" }}>Saiba mais</button>
+        </a>
 
         <div className={styles.shapeDivider}>
           <svg
@@ -579,7 +581,7 @@ const Home: NextPage = () => {
           <div className={styles.contact}>
             <h2>Tem alguma dúvida? entre em contato conosco!</h2>
             <p>Não hesite em nos contatar, sera sempre um prazer atende-lo!!</p>
-            <a href="https://api.whatsapp.com/send?phone=5561998507580" target="_blank">
+            <a href="https://api.whatsapp.com/send?phone=5561998507580" >
               <button>Contate nos</button>
             </a>
           </div>
@@ -617,13 +619,13 @@ const Home: NextPage = () => {
 
           <div className="social-media">
             <h2>Siga-nos nas redes sociais</h2>
-            <a href="https://www.facebook.com/profile.php?id=100078169107827" target="_blank">
+            <a href="https://www.facebook.com/profile.php?id=100078169107827" >
               <FaFacebook className="social-icon" />
             </a>
-            <a href="https://instagram.com/c.t._muaythaigirls?igshid=YmMyMTA2M2Y=" target="_blank">
+            <a href="https://instagram.com/c.t._muaythaigirls?igshid=YmMyMTA2M2Y=" >
               <RiInstagramFill className="social-icon" />
             </a>
-            <a href="https://www.tiktok.com/@ctmuaythaigirls?_t=8X5M0muK10Y&_r=1" target="_blank">
+            <a href="https://www.tiktok.com/@ctmuaythaigirls?_t=8X5M0muK10Y&_r=1" >
               <FaVideo className="social-icon" />
             </a>
           </div>
