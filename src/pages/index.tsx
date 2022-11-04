@@ -2,27 +2,104 @@ import type { NextPage } from "next";
 import Head from "next/head";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { A11y, Navigation, Autoplay } from "swiper";
-import { FaPlus, FaStar, FaCheckDouble, FaUsers } from "react-icons/fa";
+import { FaPlus, FaStar, FaCheckDouble, FaUsers, FaWindowClose, FaArrowAltCircleRight, FaFacebook, FaInstagram, FaVideo, FaBuilding, FaPhoneAlt, FaHome } from "react-icons/fa";
+import { MdOutlineContentCopy } from "react-icons/md";
+import { IoIosMail } from "react-icons/io";
+import { BsGearFill } from "react-icons/bs";
+import { RiInstagramFill } from "react-icons/ri";
 import { useEffect, useState } from "react";
 import Nav from "../components/Navigation";
 import styles from "../styles/Home.module.scss";
 
 const Home: NextPage = () => {
-  const [pageYOffset, setPageYOffset] = useState(0);
+  const [slidesPerView, setSlidesPerView] = useState(6);
+  const [partnersPerView, setPartnersPerView] = useState(2);
 
-  useEventListener(undefined, "scroll", () => {
-    setPageYOffset(window.pageYOffset);
-  });
+  useEffect(() => {
+    function handleResize() {
+      if (window.innerWidth < 768) {
+        setSlidesPerView(2)
+        setPartnersPerView(1)
+      }
+    }
 
-  if (pageYOffset > 0 && typeof document !== "undefined") {
-    const nav = document.querySelector("nav");
-    nav?.classList.add("scrolled");
-    nav?.classList.remove("not-scrolled");
+    window.addEventListener('resize', handleResize)
+    handleResize()
+  }, [])
+
+  useEffect(() => {
+    window.addEventListener('scroll', handleScroll, { passive: true });
+
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, [])
+
+  const handleScroll = () => {
+    const position = window.pageYOffset;
+
+    const about = document.querySelector('#about') as HTMLElement;
+    const partners = document.querySelector('#partners') as HTMLElement;
+    const disclaimer = document.querySelector('#disclaimer') as HTMLElement;
+    const projects = document.querySelector('#projects') as HTMLElement;
+    const donation = document.querySelector('#donation') as HTMLElement;
+
+    if (position > about.offsetTop - 650) {
+      const itens: any = about.children[0].children
+
+      for (let i = 0; i < itens.length; i++) {
+        const element = itens[i];
+        element.classList.add('show-section')
+      }
+    }
+
+    if (position > partners.offsetTop - 650) {
+      const itens: any = partners.children[0].children
+
+      for (let i = 0; i < itens.length; i++) {
+        const element = itens[i];
+        element.classList.add('show-section')
+      }
+    }
+
+    if (position > disclaimer.offsetTop - 650) {
+      disclaimer.children[0].classList.add('show-section')
+    }
+
+    if (position > projects.offsetTop - 650) {
+      const itens: any = projects.children[0].children
+
+      for (let i = 0; i < itens.length; i++) {
+        const element = itens[i];
+        element.classList.add('show-section')
+      }
+    }
+
+    if (position > donation.offsetTop - 650) {
+      const itens: any = donation.children[0].children
+
+      for (let i = 0; i < itens.length; i++) {
+        const element = itens[i];
+        element.classList.add('show-section')
+      }
+    }
+  };
+
+
+  function modalToggle() {
+    const modal = document.querySelector("body");
+    modal?.classList.toggle("open");
   }
-  if (pageYOffset === 0 && typeof document !== "undefined") {
-    const nav = document.querySelector("nav");
-    nav?.classList.remove("scrolled");
-    nav?.classList.add("not-scrolled");
+
+  //create funtion for copy text in input
+  function copyText() {
+    document.querySelector("#copyIcon")?.classList.toggle("bg-pan-left");
+    document.querySelector(".copy-text")?.classList.toggle("show");
+
+    const copyText = document.querySelector("#copyInput") as HTMLInputElement;
+    copyText.select();
+    copyText.setSelectionRange(0, 99999);
+    document.execCommand("copy");
   }
 
   return (
@@ -35,18 +112,18 @@ const Home: NextPage = () => {
 
       <Nav />
 
-      <header>
-        <img src="/images/logos/IMG-logo-transparente1.png" alt="" />
-        <h1>
+      <header id="home">
+        <img src="/images/logos/IMG-logo-transparente1.png" alt="" className="flip-for-image" />
+        <h1 className="show-title">
           CONFIGURANDO DESTINOS
           <br />
           Muay Thai transformando vidas
         </h1>
-        <p>
+        <p className="show-paragraph" style={{ animationDelay: ".7s" }}>
           Aulas gratuitas para crianças em vulnerabilidade social e mulheres que
           sofreram violência domestica.
         </p>
-        <button>Saiba mais</button>
+        <button className="flip-for-image" style={{ animationDelay: "1.7s" }}>Saiba mais</button>
 
         <div className={styles.shapeDivider}>
           <svg
@@ -64,19 +141,17 @@ const Home: NextPage = () => {
       </header>
 
       <section className={styles.logos}>
-        <div className="box">
+        <div className="box show-section" style={{ animationDelay: "2s" }}>
           <Swiper
-            className="swiperImgs"
+            className={styles.swiperImgs}
             modules={[A11y, Autoplay]}
-            spaceBetween={0}
-            slidesPerView={6}
+            spaceBetween={30}
+            slidesPerView={slidesPerView}
             autoplay={{
               delay: 5000,
             }}
             loop={true}
             speed={2800}
-            onSwiper={(swiper) => console.log(swiper)}
-            onSlideChange={() => console.log("slide change")}
           >
             <SwiperSlide>
               <img src="/images/logos/nicolas-max-developer.png" alt="" />
@@ -105,9 +180,9 @@ const Home: NextPage = () => {
         </div>
       </section>
 
-      <section className={styles.about}>
+      <section className={styles.about} id="about">
         <div className={`box ${styles.aboutGrid}`}>
-          <div className={styles.aboutUs}>
+          <div className={styles.aboutUs} style={{ animationDelay: ".1s", animationDuration: "1.6s" }}>
             <div className={styles.icon}>
               <FaUsers />
             </div>
@@ -121,9 +196,9 @@ const Home: NextPage = () => {
             </p>
           </div>
 
-          <img src="/images/mocao-honrosa.png" alt="" />
+          <img src="/images/mocao-honrosa.png" alt="" style={{ animationDelay: "0.4s" }} />
 
-          <div className={styles.aboutProject}>
+          <div className={styles.aboutProject} style={{ animationDelay: ".1s", animationDuration: "1.6s" }}>
             <p>
               O projeto Configurando Destinos tem como principal objetivo
               transformar a vida de nosso alunos sociais, direcionando-os por
@@ -143,16 +218,17 @@ const Home: NextPage = () => {
         </div>
       </section>
 
-      <section>
+      <section id="partners">
         <div className={`box ${styles.partners}`}>
-          <h2>Empresas que estão conosco</h2>
-          <p>
+          <h2 style={{ animationDelay: ".4s" }}>Empresas que estão conosco</h2>
+
+          <p className={styles.partnersDescription} style={{ animationDelay: ".8s" }}>
             Todo o trabalho desenvolvido pelo projeto Configurando Destinos, conta com a
             colaboração de um corpo de voluntariádos formado por profissionais e
             empresas de diversas áreas.
           </p>
 
-          <div className={styles.cards}>
+          <div className={styles.cards} style={{ animationDelay: "1.2s" }}>
             <div className={`${styles.card} ${styles.CTMuayThai}`}>
               <img src="/images/logos/IMG-logo-transparente.png" />
               <h4>C.T Muay Thai Girls</h4>
@@ -161,48 +237,46 @@ const Home: NextPage = () => {
               </p>
             </div>
 
-            <div className={styles.card}>
-              <img src="/images/logos/spotify.svg" />
-              <h4>Google Services</h4>
-              <p>
-                The phrasal sequence of the is now so that many campaign and
-                benefit
-              </p>
+            <div className={`${styles.card} ${styles.jsWebDeveloper}`}>
+              <img src="/images/logos/js-web-logo.svg" />
+              <h4>Desenvolvedor Web</h4>
+              <a href="https://jswebdeveloper.vercel.app/">Visitar o site <FaArrowAltCircleRight /></a>
             </div>
 
-            <div className={styles.card}>
+            {/* <div className={styles.card}>
               <img src="/images/logos/amazon.svg" />
               <h4>Google Services</h4>
               <p>
                 The phrasal sequence of the is now so that many campaign and
                 benefit
               </p>
-            </div>
+            </div> */}
+
           </div>
         </div>
       </section>
 
-      <section className={styles.disclaimer}>
+      <section className={styles.disclaimer} id="disclaimer">
         <div className={`box ${styles.disclaimerBox}`}>
           <h2>CONFIGURANDO DESTINOS</h2>
           <p>
             Soliedariedade não é dar o que sobra, é dar o que falta. Faça parte
             dessa luta que está mudando a vida de inumeras pessoas!!
           </p>
-          <div className={styles.icon}>♠</div>
+          <div className={styles.icon}><BsGearFill className="rotate-gear" /></div>
         </div>
       </section>
 
-      <section className={styles.projectSection}>
+      <section className={styles.projectSection} id="projects">
         <div className="box">
-          <h2>Nossos projetos</h2>
-          <p>
+          <h2 style={{ animationDelay: ".1s" }}>Nossos projetos</h2>
+          <p className={styles.projectDescription} style={{ animationDelay: ".4s" }}>
             Atualmente contamos com dois projetos sociais, Muay Thai para
             crianças com fragilidade social e Muay Thai para mulheres que
             sofreram violência domestica.
           </p>
 
-          <div className={styles.projects}>
+          <div className={styles.projects} style={{ animationDelay: ".7s" }}>
             <div className={styles.project}>
               <div style={{ backgroundColor: "#F2FAF7" }}>
                 <img src="/images/kids.png" alt="" />
@@ -222,9 +296,9 @@ const Home: NextPage = () => {
         </div>
       </section>
 
-      <section>
+      <section id="donation">
         <div className={`box ${styles.donation}`}>
-          <div className={`${styles.donationBox} ${styles.first}`}>
+          <div className={`${styles.donationBox} ${styles.first}`} style={{ animationDelay: ".2s" }}>
             <span>
               Benefícios III
               <FaStar className={styles.star} />
@@ -253,10 +327,10 @@ const Home: NextPage = () => {
               convertido em publicidade
             </p>
 
-            <button>Quero Doar</button>
+            <button onClick={modalToggle}>Quero Doar</button>
           </div>
 
-          <div className={`${styles.donationBox} ${styles.second}`}>
+          <div className={`${styles.donationBox} ${styles.second}`} style={{ animationDelay: ".6s" }}>
             <span>
               Benefícios II
               <FaStar className={styles.star} />
@@ -279,10 +353,10 @@ const Home: NextPage = () => {
               convertido em publicidade
             </p>
 
-            <button>Quero Doar</button>
+            <button onClick={modalToggle}>Quero Doar</button>
           </div>
 
-          <div className={`${styles.donationBox} ${styles.third}`}>
+          <div className={`${styles.donationBox} ${styles.third}`} style={{ animationDelay: ".9s" }}>
             <span>
               Benefícios I
               <FaStar className={styles.star} />
@@ -300,12 +374,12 @@ const Home: NextPage = () => {
               convertido em publicidade
             </p>
 
-            <button>Quero Doar</button>
+            <button onClick={modalToggle}>Quero Doar</button>
           </div>
         </div>
       </section>
 
-      <section className={styles.teamSection}>
+      <section className={styles.teamSection} id="team">
         <div className={`box ${styles.team}`}>
           <span>Acreditamos na construção uns dos outros e por isso</span>
           <h2>trabalhamos com alguns parceiros incríveis</h2>
@@ -317,25 +391,22 @@ const Home: NextPage = () => {
             <Swiper
               modules={[A11y, Autoplay, Navigation]}
               spaceBetween={40}
-              slidesPerView={2}
+              slidesPerView={partnersPerView}
               autoplay={{
                 delay: 5000,
               }}
               navigation
               loop={true}
               speed={1800}
-              onSwiper={(swiper) => console.log(swiper)}
-              onSlideChange={() => console.log("slide change")}
               className={styles.swiper}
             >
               <SwiperSlide>
                 <div className={styles.person}>
-                  <img src="/images/person01.jpg" alt="" />
+                  <img src="http://github.com/jonatafsa.png" alt="" />
                   <div className={styles.details}>
                     <p>
-                      `&rdquo;`One disadvantage of Lorum Ipsum is that in Latin
-                      certain letters appear more frequently than
-                      others.`&rdquo;`
+                      Sou freelancer, trabalho construindo projetos completos
+                      voltados para a web, como por exemplo - sites, aplicações e sistemas.
                     </p>
                     <span>Jonata Santos</span>
                     <strong>Desenvolvedor Web, Programador</strong>
@@ -348,9 +419,9 @@ const Home: NextPage = () => {
                   <img src="/images/person02.png" alt="" />
                   <div className={styles.details}>
                     <p>
-                      `&rdquo;`26 anos de idade Atleta Bicampeã internacional,
+                      26 anos de idade Atleta Bicampeã internacional,
                       Campeã paulista na categoria 59kg 10 lutas 8
-                      vitórias.`&rdquo;`
+                      vitórias.
                     </p>
                     <span>Prof: Thaty Azevedo</span>
                     <strong>Atleta e Professora de Muay Thai</strong>
@@ -363,26 +434,11 @@ const Home: NextPage = () => {
                   <img src="/images/person03.png" alt="" />
                   <div className={styles.details}>
                     <p>
-                      `&rdquo;`Formado no Curso Superior de Tecnologia em Análise e Desenvolvimento de Sistemas
-                      com 29 certificações complementares. `&rdquo;`
+                      Formado no Curso Superior de Tecnologia em Análise e Desenvolvimento de Sistemas
+                      com 29 certificações complementares.
                     </p>
                     <span>Nicolas Max</span>
                     <strong>Analista de Sistemas</strong>
-                  </div>
-                </div>
-              </SwiperSlide>
-
-              <SwiperSlide>
-                <div className={styles.person}>
-                  <img src="/images/person01.jpg" alt="" />
-                  <div className={styles.details}>
-                    <p>
-                      `&rdquo;`One disadvantage of Lorum Ipsum is that in Latin
-                      certain letters appear more frequently than
-                      others.`&rdquo;`
-                    </p>
-                    <span>Jonata Santos</span>
-                    <strong>Desenvolvedor Web, Programador</strong>
                   </div>
                 </div>
               </SwiperSlide>
@@ -518,12 +574,14 @@ const Home: NextPage = () => {
         </div>
       </section>
 
-      <section className={styles.contactSection}>
+      <section className={styles.contactSection} id="contact">
         <div className="box">
           <div className={styles.contact}>
             <h2>Tem alguma dúvida? entre em contato conosco!</h2>
             <p>Não hesite em nos contatar, sera sempre um prazer atende-lo!!</p>
-            <button>Contate nos</button>
+            <a href="https://api.whatsapp.com/send?phone=5561998507580" target="_blank">
+              <button>Contate nos</button>
+            </a>
           </div>
         </div>
 
@@ -541,22 +599,74 @@ const Home: NextPage = () => {
           </svg>
         </div>
       </section>
+
+      <footer>
+        <div className="box">
+          <div className="logo">
+            <img src="/images/logo-dark.png" alt="" />
+          </div>
+
+          <div className="contact">
+            <h2>Entre em contato</h2>
+
+            <p><FaBuilding /> CT. Muay Thai Girls</p>
+            <p><FaHome /> Rua boa vista, N 180, Bairro Formosinha</p>
+            <p><FaPhoneAlt /> (61) 9 9850-7580</p>
+            <p><IoIosMail /> tatielenazevedo21@gmail.com</p>
+          </div>
+
+          <div className="social-media">
+            <h2>Siga-nos nas redes sociais</h2>
+            <a href="https://www.facebook.com/profile.php?id=100078169107827" target="_blank">
+              <FaFacebook className="social-icon" />
+            </a>
+            <a href="https://instagram.com/c.t._muaythaigirls?igshid=YmMyMTA2M2Y=" target="_blank">
+              <RiInstagramFill className="social-icon" />
+            </a>
+            <a href="https://www.tiktok.com/@ctmuaythaigirls?_t=8X5M0muK10Y&_r=1" target="_blank">
+              <FaVideo className="social-icon" />
+            </a>
+          </div>
+        </div>
+      </footer>
+
+      <div className="end">
+        <p>Configurando destinos © {new Date().getFullYear()} Todos os direitos reservados | Desenvolvido por <a href="https://jswebdeveloper.vercel.app/">Jonata Santos</a></p>
+      </div>
+
+      <div className="modal">
+        <div className="modal-overlay" onClick={modalToggle}></div>
+        <div className="slider-wrap">
+          <div className={styles.donationOptions}>
+            <div className={styles.qr}>
+              <img src="/images/qrCode.jpg" alt="" />
+            </div>
+
+            <div className={styles.donationContent}>
+              <p>Use o QRCode ao lado para doar, <br /> ou o pix copia e cola abaixo</p>
+
+              <div className={styles.pixCopyPast}>
+                <input type="text" defaultValue="TSTESTSADBJANSKDAK" id="copyInput" />
+                <span className="copy-text">Pix Copiado</span>
+                <div className={styles.copyIcon} onClick={copyText} id="copyIcon" >
+                  <MdOutlineContentCopy />
+                </div>
+              </div>
+
+              <span>
+                Atenção essas são as unicas formas que atualmente estamos aceitando doações,
+                qualquer outra forma de doação que encontre por ai, não é de nossa autoria.
+              </span>
+              <p>
+              </p>
+            </div>
+
+            <FaWindowClose className={styles.closeBtn} onClick={modalToggle} />
+          </div>
+        </div>
+      </div>
     </div>
   );
 };
 
 export default Home;
-
-export const useEventListener = (
-  target: EventTarget | undefined,
-  event: string,
-  listener: EventListenerOrEventListenerObject,
-  trigger = true
-): void => {
-  useEffect(() => {
-    const t = target || window;
-    t.addEventListener(event, listener);
-    trigger && t.dispatchEvent(new Event(event));
-    return () => t.removeEventListener(event, listener);
-  });
-};
