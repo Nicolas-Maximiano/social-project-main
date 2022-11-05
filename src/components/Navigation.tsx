@@ -6,6 +6,7 @@ export default function Nav() {
   function menuMobileToggle() {
     const menu = document.querySelector(".menuMobile");
     menu?.classList.toggle("active");
+    document.querySelector("body")?.classList.toggle("stop-scrolling");
   }
 
   return (
@@ -32,12 +33,12 @@ export default function Nav() {
       <div className="menuMobile">
         <FaWindowClose className="close" onClick={menuMobileToggle} />
         <ul>
-          <li>Início</li>
-          <li>Sobre o projeto</li>
-          <li>Postagens</li>
-          <li>Time</li>
-          <li>Empresas</li>
-          <li>Contato</li>
+          <a href="#home" onClick={menuMobileToggle}><li>Início</li></a>
+          <a href="#about" onClick={menuMobileToggle}><li>Sobre o projeto</li></a>
+          <a href="#partners" onClick={menuMobileToggle}><li>Parceiros</li></a>
+          <a href="#projects" onClick={menuMobileToggle}><li>Nossos projetos</li></a>
+          <a href="#team" onClick={menuMobileToggle}><li>Time</li></a>
+          <a href="#contact" onClick={menuMobileToggle}><li>Contato</li></a>
         </ul>
       </div>
     </nav>

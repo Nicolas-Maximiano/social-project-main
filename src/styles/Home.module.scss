@@ -63,9 +63,11 @@
         font-size: .85rem;
       }
     }
-      a {
-        z-index: 81;
-      }
+
+    a {
+      z-index: 81;
+    }
+
     button {
       padding: 12px 22px;
       border: 0;
@@ -653,7 +655,7 @@
       .swiper {
         // max-height: 300px;
         max-width: 1120px;
-        padding: 1rem;
+        padding: .5rem;
 
         @media (max-width: 768px) {
           max-width: 100vw;
@@ -671,7 +673,8 @@
 
           @media (max-width: 768px) {
             grid-template-columns: 170px 1fr;
-            height: 180px;
+            height: fit-content;
+            grid-template-columns: 150px 1fr;
           }
 
           img {
@@ -688,13 +691,13 @@
 
             p {
               text-align: justify;
-              font-size: .9rem;
+              font-size: .75rem;
             }
 
             strong {
               margin-top: auto;
               font-weight: 300;
-              font-size: .8rem;
+              font-size: .6rem;
             }
           }
         }
@@ -821,7 +824,8 @@
         color: #F9FAFB;
         cursor: pointer;
         transition: .3s linear;
-        z-index: 98;
+        z-index: 97;
+        position: relative;
 
         &:hover {
           filter: brightness(1.4);
@@ -837,6 +841,7 @@
       overflow: hidden;
       line-height: 0;
       transform: rotate(180deg);
+      z-index: 96;
 
       svg {
         position: relative;
