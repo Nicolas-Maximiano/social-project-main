@@ -130,7 +130,7 @@ const Home: NextPage = () => {
         <link rel="icon" href="/favicon.png" />
 
         <meta property="og:site_name" content="Configurando destinos" />
-        <meta property="og:title" content="San Roque 2014 Pollos" />
+        <meta property="og:title" content="Configurando destinos" />
         <meta property="og:description" content="O projeto Configurando Destinos tem como principal objetivo
               transformar a vida de nosso alunos sociais, direcionando-os por
               meio do esporte para uma vida mais saudável com crescimento
