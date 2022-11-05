@@ -691,13 +691,21 @@
 
             p {
               text-align: justify;
-              font-size: .75rem;
+              font-size: .9rem;
+
+              @media (max-width: 768px) {
+                font-size: .75rem;
+              }
             }
 
             strong {
               margin-top: auto;
               font-weight: 300;
-              font-size: .6rem;
+              font-size: .8rem;
+
+              @media (max-width: 768px) {
+                font-size: .6rem;
+              }
             }
           }
         }
